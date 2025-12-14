@@ -14,6 +14,8 @@ export default async function handler(req, res) {
     const TELEGRAM_API = `https://api.telegram.org/bot${BOT_TOKEN}`;
     const host = req.headers['x-forwarded-host'] || req.headers.host || '';
     const APP_URL = process.env.APP_URL || (host ? `https://${host}` : '');
+    const baseUrl = (APP_URL || '').replace(/\/$/, '');
+    const MINI_APP_URL = baseUrl ? `${baseUrl}/index.html` : '';
 
     const { message } = req.body || {};
     if (!message) return res.status(200).json({ ok: true });
@@ -29,10 +31,10 @@ export default async function handler(req, res) {
 
     if (text === '/start') {
       responseText = `🎮 <b>Welcome to TWIXER, ${firstName}!</b>\n\n⚡ <b>Experience Gaming Like Never Before!</b>\n\n✨ <b>What You Get:</b>\n💰 Daily Rewards & Massive Bonuses\n🎡 Spin the Wheel - Win Big Prizes\n👥 Invite Friends, Earn Commissions\n⏰ Daily Check-in Streaks\n🏆 Leaderboards & Rankings\n\n🚀 <b>Ready to Start?</b>\nTap "Open Mini App" below and begin earning today!\n\n⭐ Join thousands of players winning amazing rewards!`;
-      if (APP_URL) {
+      if (MINI_APP_URL) {
         replyMarkup = {
           inline_keyboard: [
-            [{ text: '🎮 Play to Earn', web_app: { url: APP_URL } }],
+            [{ text: '🎮 Play to Earn', web_app: { url: MINI_APP_URL } }],
             [{ text: '💬 Join Community', url: 'https://t.me/your_community' }, { text: '❓ Help', callback_data: 'help' }]
           ]
         };
