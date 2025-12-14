@@ -1,0 +1,10 @@
+{
+  "buildCommand": "npm install",
+  "outputDirectory": ".",
+  "framework": "express",
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 10
+    }
+  }
+}
