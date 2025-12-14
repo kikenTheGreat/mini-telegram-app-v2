@@ -16,6 +16,8 @@ export default async function handler(req, res) {
     const APP_URL = process.env.APP_URL || (host ? `https://${host}` : '');
     const baseUrl = (APP_URL || '').replace(/\/$/, '');
     const MINI_APP_URL = baseUrl ? `${baseUrl}/index.html` : '';
+    
+    console.log(`[Webhook] Generated MINI_APP_URL: ${MINI_APP_URL}`);
 
     const { message } = req.body || {};
     if (!message) return res.status(200).json({ ok: true });
